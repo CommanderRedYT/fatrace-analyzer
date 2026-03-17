@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
+import { enqueueSnackbar } from 'notistack';
+
 import { generateStatistics } from './utils';
 
 const VisuallyHiddenInput = styled('input')({
@@ -48,7 +50,9 @@ const App: FC = () => {
 
     const handleParse = useCallback((files: FileList) => {
         if (files.length !== 1) {
-            alert('Invalid amount of files selected');
+            enqueueSnackbar('Invalid amount of files selected', {
+                variant: 'error',
+            });
             return;
         }
 
@@ -59,7 +63,9 @@ const App: FC = () => {
             const results = event.target?.result;
 
             if (!results) {
-                alert('Invalid file provided');
+                enqueueSnackbar('Invalid file provided', {
+                    variant: 'error',
+                });
                 return;
             }
 
@@ -76,12 +82,15 @@ const App: FC = () => {
                         `Unable to parse line ${i + 1} of ${lines.length}`,
                         e,
                     );
-                    alert(`Error parsing line ${i + 1}`);
-                    continue;
+                    enqueueSnackbar(`Error parsing line ${i + 1}`, {
+                        variant: 'error',
+                    });
                 }
             }
 
-            alert('Successfully parsed file');
+            enqueueSnackbar('Successfully parsed file', {
+                variant: 'success',
+            });
 
             setParsedData(parsed);
             setStatistics(generateStatistics(parsed));
@@ -115,7 +124,9 @@ const App: FC = () => {
                                 if (event.target.files) {
                                     handleParse(event.target.files);
                                 } else {
-                                    alert('Please select a file!');
+                                    enqueueSnackbar('Please select a file!', {
+                                        variant: 'error',
+                                    });
                                 }
                             }}
                         />

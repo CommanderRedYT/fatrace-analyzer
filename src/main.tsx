@@ -4,6 +4,8 @@ import { createRoot } from 'react-dom/client';
 
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { SnackbarProvider } from 'notistack';
+
 import App from './App';
 
 import 'chart.js/auto';
@@ -15,6 +17,9 @@ import '@fontsource/roboto/700.css';
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <CssBaseline />
+        <SnackbarProvider
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        />
         <App />
     </StrictMode>,
 );
