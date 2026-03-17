@@ -3,6 +3,8 @@ import type { FC } from 'react';
 
 import { useCallback, useState } from 'react';
 
+import { Bar } from 'react-chartjs-2';
+
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -78,7 +80,7 @@ const App: FC = () => {
     }, []);
 
     return (
-        <Container sx={{ mt: 1 }}>
+        <Container sx={{ mt: 1, mb: 2 }}>
             <Box
                 display="flex"
                 flexDirection="row"
@@ -107,8 +109,75 @@ const App: FC = () => {
                     />
                 </Button>
             </Box>
-            {parsedData ? (
-                <pre>{JSON.stringify(statistics, null, 4)}</pre>
+            {parsedData && statistics ? (
+                <Box>
+                    <Box>
+                        <Typography>Top 10 Written Paths</Typography>
+                        <Bar
+                            data={{
+                                labels: statistics.top10writtenPaths.map(
+                                    item => item.path,
+                                ),
+                                datasets: [
+                                    {
+                                        label: 'Written Paths',
+                                        data: statistics.top10writtenPaths.map(
+                                            item => item.value,
+                                        ),
+                                        backgroundColor:
+                                            'rgba(75, 192, 192, 0.6)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1,
+                                    },
+                                ],
+                            }}
+                            options={{
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: tickValue =>
+                                                `${tickValue} writes`,
+                                        },
+                                    },
+                                },
+                            }}
+                        />
+                    </Box>
+                    <Box>
+                        <Typography>Top 10 Written PIDs</Typography>
+                        <Bar
+                            data={{
+                                labels: statistics.top10writtenPids.map(
+                                    item => item.pid,
+                                ),
+                                datasets: [
+                                    {
+                                        label: 'Written Pids',
+                                        data: statistics.top10writtenPids.map(
+                                            item => item.value,
+                                        ),
+                                        backgroundColor:
+                                            'rgba(75, 192, 192, 0.6)',
+                                        borderColor: 'rgba(75, 192, 192, 1)',
+                                        borderWidth: 1,
+                                    },
+                                ],
+                            }}
+                            options={{
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        ticks: {
+                                            callback: tickValue =>
+                                                `${tickValue} writes`,
+                                        },
+                                    },
+                                },
+                            }}
+                        />
+                    </Box>
+                </Box>
             ) : (
                 <Box
                     my={4}
