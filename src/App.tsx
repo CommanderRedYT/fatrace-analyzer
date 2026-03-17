@@ -30,6 +30,13 @@ const MonospaceLi = styled('li')({
     fontFamily: 'monospace',
 });
 
+const Code = styled('code')(({ theme }) => ({
+    backgroundColor: theme.palette.grey[800],
+    color: theme.palette.common.white,
+    padding: theme.spacing(0.5),
+    borderRadius: theme.shape.borderRadius,
+}));
+
 const App: FC = () => {
     const [parsedData, setParsedData] = useState<ParsedTrace | undefined>(
         undefined,
@@ -85,33 +92,39 @@ const App: FC = () => {
 
     return (
         <Container sx={{ mt: 1, mb: 2 }}>
-            <Box
-                display="flex"
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="space-between"
-            >
-                <Typography variant="h4">Fatrace Analyzer</Typography>
-                <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
+            <Box mb={2}>
+                <Box
+                    display="flex"
+                    flexDirection="row"
+                    alignItems="center"
+                    justifyContent="space-between"
                 >
-                    Upload files
-                    <VisuallyHiddenInput
-                        type="file"
-                        accept="application/json"
-                        onChange={event => {
-                            if (event.target.files) {
-                                handleParse(event.target.files);
-                            } else {
-                                alert('Please select a file!');
-                            }
-                        }}
-                    />
-                </Button>
+                    <Typography variant="h4">Fatrace Analyzer</Typography>
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                    >
+                        Upload files
+                        <VisuallyHiddenInput
+                            type="file"
+                            accept="application/json"
+                            onChange={event => {
+                                if (event.target.files) {
+                                    handleParse(event.target.files);
+                                } else {
+                                    alert('Please select a file!');
+                                }
+                            }}
+                        />
+                    </Button>
+                </Box>
+                <Typography>
+                    To generate a file for this tool, run the following command:{' '}
+                    <Code>fatrace -o /path/to/trace.json -j</Code>
+                </Typography>
             </Box>
             {parsedData && statistics ? (
                 <Box>
