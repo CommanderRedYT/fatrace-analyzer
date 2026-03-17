@@ -100,7 +100,7 @@ const App: FC = () => {
     }, []);
 
     return (
-        <Container sx={{ mt: 1, mb: 2 }}>
+        <Container sx={{ mt: 2, mb: 4 }} maxWidth="xl">
             <Box mb={2}>
                 <Box
                     display="flex"
@@ -138,7 +138,7 @@ const App: FC = () => {
                 </Typography>
             </Box>
             {parsedData && statistics ? (
-                <Box>
+                <Box display="flex" flexDirection="column" gap={5}>
                     <Box>
                         <Typography>Top 10 Written Paths</Typography>
                         <Bar
