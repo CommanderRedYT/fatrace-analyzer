@@ -26,6 +26,10 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
+const MonospaceLi = styled('li')({
+    fontFamily: 'monospace',
+});
+
 const App: FC = () => {
     const [parsedData, setParsedData] = useState<ParsedTrace | undefined>(
         undefined,
@@ -143,6 +147,13 @@ const App: FC = () => {
                                 },
                             }}
                         />
+                        <ol>
+                            {statistics.top10writtenPaths.map(item => (
+                                <MonospaceLi key={item.path}>
+                                    {item.path}
+                                </MonospaceLi>
+                            ))}
+                        </ol>
                     </Box>
                     <Box>
                         <Typography>Top 10 Written PIDs</Typography>
@@ -176,6 +187,13 @@ const App: FC = () => {
                                 },
                             }}
                         />
+                        <ol>
+                            {statistics.top10writtenPids.map(item => (
+                                <MonospaceLi key={item.pid}>
+                                    Process {item.pid}
+                                </MonospaceLi>
+                            ))}
+                        </ol>
                     </Box>
                 </Box>
             ) : (
